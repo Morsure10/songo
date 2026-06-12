@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Songo – Version 1 Locale</title>
+<link rel="stylesheet" href="style1.css">
+
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-brand">
+    <div class="header-logo">⬡</div>
+    <div class="header-title">
+      <span>Version 1 Locale</span>
+      <span>Songo</span>
+    </div>
+  </div>
+  <div class="header-nav">
+    <button class="btn-nav" id="btn-rules-nav">Règles</button>
+    <button class="btn-nav" id="btn-prise-nav">Prise</button>
+    <button class="btn-nav danger" id="btn-quit-nav">Quitter</button>
+  </div>
+  <div class="header-author">
+    <strong>KEMSONJOU KENFACK JERRY LEONEL</strong>
+    Université de Yaoundé 1<br>
+    Licence 2 – Cameroun
+  </div>
+</header>
+
+<!-- ===== INFO BAR ===== -->
+<div id="info-bar">
+  <div class="info-card"><div class="lbl">Votre Camp</div><div class="val" id="ic-camp">–</div></div>
+  <div class="info-card"><div class="lbl">Tour</div><div class="val" id="ic-tour">–</div></div>
+  <div class="info-card"><div class="lbl">État</div><div class="val" id="ic-etat">En jeu</div></div>
+  <div class="info-card"><div class="lbl">Graines plateau</div><div class="val" id="ic-total">70</div></div>
+</div>
+
+<!-- ===== STATUS ===== -->
+<div id="status-bar">
+  <div id="status-inner">Initialisation…</div>
+</div>
+
+<!-- ===== MAIN ===== -->
+<div id="main">
+  <!-- Score Nord -->
+  <div class="score-panel north">
+    <div class="sp-label">Camp</div>
+    <div class="sp-name">Nord</div>
+    <div class="sp-num" id="score-north">0</div>
+    <div class="sp-unit">Graines</div>
+    <div class="sp-tag" id="tag-north">Joueur 1</div>
+  </div>
+
+  <!-- Plateau -->
+  <div id="board-wrap">
+    <div class="board-row-label north">
+      <span>← N7</span>
+      <span>Camp Nord (Joueur 1)</span>
+      <span>N1 →</span>
+    </div>
+    <div class="pit-row" id="row-north"></div>
+
+    <div class="board-divider">
+      <hr/><div class="div-text">songo</div><hr/>
+    </div>
+    <div class="turn-indicator" id="turn-indicator">À vous de jouer</div>
+    <div class="board-divider">
+      <hr/><div class="div-text">●</div><hr/>
+    </div>
+
+    <div class="pit-row" id="row-south"></div>
+    <div class="board-row-label south">
+      <span>← S1</span>
+      <span>Camp Sud (Joueur 2)</span>
+      <span>S7 →</span>
+    </div>
+  </div>
+
+  <!-- Score Sud -->
+  <div class="score-panel south">
+    <div class="sp-label">Camp</div>
+    <div class="sp-name">Sud</div>
+    <div class="sp-num" id="score-south">0</div>
+    <div class="sp-unit">Graines</div>
+    <div class="sp-tag" id="tag-south">Joueur 2</div>
+  </div>
+</div>
+
+<!-- ===== BOTTOM ===== -->
+<div id="bottom">
+  <div class="bottom-card">
+    <h3>Dernier Coup</h3>
+    <div id="last-move-text">–</div>
+  </div>
+  <div class="bottom-card">
+    <h3>Historique</h3>
+    <ol id="history-list"></ol>
+  </div>
+</div>
+
+<!-- ===== BUTTONS ===== -->
+<div id="btn-row">
+  <button class="btn-main" id="btn-restart">↺ Nouvelle partie</button>
+  <button class="btn-main" id="btn-rules" style="display:none">📖 Règles</button>
+</div>
+
+<!-- ===== END MODAL ===== -->
+<div id="modal-overlay">
+  <div class="modal-box">
+    <h2 id="modal-title">Fin de partie</h2>
+    <p id="modal-body"></p>
+    <button class="btn-main" id="modal-btn">Rejouer</button>
+  </div>
+</div>
+
+<!-- ===== RULES MODAL ===== -->
+<div id="rules-overlay">
+  <div class="rules-box">
+    <button class="rules-close" id="rules-close">✕ Fermer</button>
+    <h2>Règles du Songo</h2>
+    <h3>But du jeu</h3>
+    <p>Atteindre au moins 40 graines capturées sur 70 au total. 2 joueurs : Nord et Sud.</p>
+    <h3>Tour de jeu</h3>
+    <p>Choisir une case non vide de son camp. Les graines sont semées une par une dans l'ordre du cycle :</p>
+    <ul>
+      <li>Nord : N0→N1→…→N6 → S6→S5→…→S0 → N0…</li>
+      <li>Sud : S0→N0→…→N6→S6→… (même cycle)</li>
+    </ul>
+    <h3>Capture</h3>
+    <ul>
+      <li>La dernière graine tombe dans le camp adverse</li>
+      <li>La case finale ≠ première case adverse (case protégée)</li>
+      <li>La case finale contient 2, 3 ou 4 graines après semaille</li>
+      <li>La capture ne vide pas entièrement le camp adverse</li>
+    </ul>
+    <h3>Prise à la chaîne</h3>
+    <p>On remonte vers la première case adverse et on capture chaque case consécutive contenant 2, 3 ou 4 graines.</p>
+    <h3>Grenier (>13 graines)</h3>
+    <p>Tour complet sans la case source, puis reste distribué uniquement chez l'adversaire. Si la dernière graine devrait tomber dans la première case adverse protégée → capturée seule.</p>
+    <h3>Solidarité</h3>
+    <p>Si le camp adverse est vide : donner ≥7 graines si possible, sinon le maximum possible, sinon la partie s'arrête.</p>
+    <h3>Interdits</h3>
+    <ul>
+      <li>Case d'attaque avec 1 graine : coup interdit</li>
+      <li>Case d'attaque avec 2 graines : interdit sauf si capture provoquée</li>
+    </ul>
+    <h3>Fin de partie</h3>
+    <ul>
+      <li>Un joueur atteint 40 graines</li>
+      <li>Moins de 10 graines sur le plateau</li>
+      <li>Solidarité impossible</li>
+    </ul>
+  </div>
+</div>
+
+<script src="game1.js"></script>
+
+</body>
+</html>
